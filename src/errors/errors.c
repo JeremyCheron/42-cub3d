@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/02/20 17:42:52 by jcheron          ###   ########.fr       */
+/*   Created: 2025/02/20 17:23:50 by jcheron           #+#    #+#             */
+/*   Updated: 2025/02/20 17:28:42 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
-
-# include "../libft/include/libft.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
-
-char	**read_map(
-			const char *filename);
+#include "../../includes/cub.h"
 
 void	error_exit(
-			char *message);
-
-#endif
+	char *message)
+{
+	if (message)
+		ft_putendl_fd(message, 2);
+	exit(1);
+}

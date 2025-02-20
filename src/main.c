@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.h                                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/02/20 17:42:52 by jcheron          ###   ########.fr       */
+/*   Created: 2025/02/20 14:45:41 by jcheron           #+#    #+#             */
+/*   Updated: 2025/02/20 17:22:51 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
+#include "../includes/cub.h"
 
-# include "../libft/include/libft.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <stdbool.h>
-
-char	**read_map(
-			const char *filename);
-
-void	error_exit(
-			char *message);
-
-#endif
+int	main(
+	int ac,
+	char **av)
+{
+	if (ac != 2)
+		error_exit("Usage: ./cub3d <map.cub>");
+	read_map(av[1]);
+	return (0);
+}

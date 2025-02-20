@@ -1,7 +1,7 @@
 # ══════════════════════════════════ Config Makefile ═══════════════════════════════════
 # ───────────────────────────────────── Variables ──────────────────────────────────────
 
-NAME			= so_long
+NAME			= cub3D
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror $(GLFW_INC)
 MLX42_PATH		= minilibx
@@ -51,17 +51,10 @@ endif
 # ────────────────────────────────────── Sources ───────────────────────────────────────
 
 SRCS = 	src/main.c \
-		src/map/map_malloc.c \
-		src/map/map_check.c \
-		src/map/map_parse.c \
-		src/map/map_flood_fill_utils.c \
-		src/map/map_flood_fill.c \
-		src/init/init_game.c \
-		src/init/init_textures.c \
-		src/utils/cleanup.c \
-		src/utils/input.c \
-		src/utils/player.c \
-		src/utils/render.c \
+		src/errors/errors.c \
+		src/parsing/map_parser.c \
+		src/parsing/read_map.c \
+		src/parsing/parser_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 

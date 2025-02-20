@@ -1,57 +1,136 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/20 12:58:12 by jcheron           #+#    #+#              #
-#    Updated: 2025/02/20 12:59:16 by jcheron          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# ══════════════════════════════════ Config Makefile ═══════════════════════════════════
+# ───────────────────────────────────── Variables ──────────────────────────────────────
 
-COL_RED		=	\x1b[1;31m
-COL_GREEN	=	\x1b[1;32m
-COL_RESET	=	\x1b[1;0m
+NAME			= so_long
+CC				= cc
+CFLAGS			= -Wall -Wextra -Werror $(GLFW_INC)
+MLX42_PATH		= minilibx
+LIBFT_PATH		= libft
+MLX42			= $(MLX42_PATH)/build/libmlx42.a
+LIBFT			= $(LIBFT_PATH)/libft.a
+RM				= rm -f
+CLONE 			= git submodule init && git submodule update
 
-RM			=	rm -f
-ECHO		=	/usr/bin/echo
+# ────────────────────────────────────── Couleurs ──────────────────────────────────────
 
-SRC_DIR		=	.
-OBJ_DIR		=	build
+DEF_COLOR = \033[0;39m
+GRAY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[0;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[0;95m
+CYAN = \033[0;96m
+WHITE = \033[0;97m
+NC = \033[0m
 
-CFLAGS		=	-Wall -Werror -Wextra -g3
-LFLAGS		=	-pthread
+# ──────────────────────────────────── Detection Os ────────────────────────────────────
 
-FILES		=				\
-	main					\
-	parser					\
+UNAME := $(shell uname)
+ARCH := $(shell uname -m)
+
+# Configuration pour MacOS
+ifeq ($(UNAME), Darwin)
+	ifeq ($(ARCH), arm64)
+		GLFW_FLAGS = -lglfw -L"/opt/homebrew/lib/"
+		GLFW_INC = -I"/opt/homebrew/include"
+		OS_MSG = "MacOS ARM"
+	else
+		GLFW_FLAGS = -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+		GLFW_INC = -I"/Users/$(USER)/.brew/opt/glfw/include"
+		OS_MSG = "MacOS Intel"
+	endif
+	FRAMEWORK = -framework Cocoa -framework OpenGL -framework IOKit
+else
+	GLFW_FLAGS = -ldl -lglfw -pthread -lm
+	GLFW_INC =
+	FRAMEWORK =
+	OS_MSG = "Linux"
+endif
+
+# ────────────────────────────────────── Sources ───────────────────────────────────────
+
+SRCS = 	src/main.c \
+		src/map/map_malloc.c \
+		src/map/map_check.c \
+		src/map/map_parse.c \
+		src/map/map_flood_fill_utils.c \
+		src/map/map_flood_fill.c \
+		src/init/init_game.c \
+		src/init/init_textures.c \
+		src/utils/cleanup.c \
+		src/utils/input.c \
+		src/utils/player.c \
+		src/utils/render.c \
+
+OBJS = $(SRCS:.c=.o)
+
+# ──────────────────────────────────── Progress Bar ────────────────────────────────────
+
+TOTAL_FILES := $(words $(SRCS))
+CURRENT_FILE := 0
+PROGRESS_WIDTH := 40
+
+define update_progress
+	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
+	$(eval PERCENTAGE=$(shell echo $$(($(CURRENT_FILE) * 100 / $(TOTAL_FILES)))))
+	$(eval PROGRESS=$(shell echo $$(($(CURRENT_FILE) * $(PROGRESS_WIDTH) / $(TOTAL_FILES)))))
+	printf "\r$(BLUE)[%3d%%] $(GREEN)Building %-50s$(NC)" $(PERCENTAGE) "$1"
+endef
+
+# ─────────────────────────────────────── Phony ────────────────────────────────────────
+
+.PHONY:		all clean fclean re
 
 
-SRCS		=	$(addsuffix .c,$(FILES))
-OBJS		=	$(addsuffix .o,$(FILES))
+# ═════════════════════════════════ Regles Principales ═════════════════════════════════
 
-NAME		=	cub3d
+all:			$(LIBFT) $(MLX42) $(NAME)
 
-.PHONY: all bonus clean fclean re norminette
+$(LIBFT):
+			@printf "$(BLUE)[  0%%] $(GREEN)Building libft...$(NC)\n"
+			@make -C $(LIBFT_PATH)
+			@printf "$(BLUE)[100%%] $(GREEN)Libft built successfully$(NC)\n"
 
-all: $(NAME)
-
-bonus: all
-
-clean:
-	$(RM) -r $(OBJS)
-
-fclean: clean
-	$(RM) -f $(NAME)
-
-re: fclean all
+$(MLX42):
+			@echo "$(YELLOW)Cloning MLX42 submodule...$(NC)"
+			$(CLONE)
+			@printf "$(BLUE)[  0%%] $(GREEN)Building MLX42...$(NC)\n"
+			@cmake $(MLX42_PATH) -B $(MLX42_PATH)/build
+			@make -C $(MLX42_PATH)/build
+			@printf "$(BLUE)[100%%] $(GREEN)MLX42 built successfully$(NC)\n"
 
 $(NAME): $(OBJS)
-	$(CC) $^ -o $@ $(LFLAGS)
+			$(CC) $(OBJS) $(MLX42) -L$(LIBFT_PATH) -lft $(GLFW_FLAGS) $(FRAMEWORK) -o $(NAME)
+			@printf "$(BLUE)[100%%] $(GREEN)$(NAME) is compiled !! $(NC)\n"
+			@echo $(HEADER)
 
 %.o: %.c
-	$(CC) -c $< -o $@ -I. $(CFLAGS)
+			@$(call update_progress,$<)
+			@$(CC) $(CFLAGS) -I$(MLX42_PATH)/include -I$(LIBFT_PATH) -c $< -o $@
+			@printf "\n"
+
+# ─────────────────────────────────────── Clean ────────────────────────────────────────
+
+clean:
+			@echo "$(YELLOW)Cleaning object files...$(NC)"
+			@make -C $(LIBFT_PATH) clean
+			@rm -rf $(MLX42_PATH)/build
+			@rm -f $(OBJS)
+			@echo "$(GREEN)Object files cleaned!$(NC)"
+
+fclean:		clean
+			@echo "$(YELLOW)Cleaning all files...$(NC)"
+			@make -C $(LIBFT_PATH) fclean
+			@rm -f $(NAME)
+			@echo "$(GREEN)All files cleaned!$(NC)"
+
+# ────────────────────────────────────── Rebuild ───────────────────────────────────────
+
+re:			fclean all
+			@echo "$(GREEN)>>> Cleaned and rebuilt everything! <<<$(DEF_COLOR)"
+
+# ───────────────────────────────────── Norminette ─────────────────────────────────────
 
 norminette:
 	@norminette | grep -Ev '^Notice:|OK!$$'					\

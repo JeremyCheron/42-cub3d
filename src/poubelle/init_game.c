@@ -1,0 +1,131 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_game.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/27 16:03:39 by edetoh            #+#    #+#             */
+/*   Updated: 2025/01/03 16:18:33 by edetoh           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub.h"
+
+static int	init_mlx(t_game *game)
+{
+	// int	window_width;
+	// int	window_height;
+
+	if (game->map->width <= 0 || game->map->height <= 0)
+	{
+		free_map(game->map);
+		ft_putstr_fd(ERR_MAP_SIZE, 2);
+		return (0);
+	}
+	// window_width = game->map->width * TILE_SIZE;
+	// window_height = game->map->height * TILE_SIZE;
+	game->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D", true);
+	if (!game->mlx)
+	{
+		free_map(game->map);
+		ft_putstr_fd(ERR_INIT_MLX, 2);
+		return (0);
+	}
+	return (1);
+}
+
+static int	init_map_struct(t_game *game, char *map_path)
+{
+	(void)map_path;
+	game->map = (t_map *)malloc(sizeof(t_map));
+	if (!game->map)
+	{
+		ft_putstr_fd(ERR_MAP_MISSING, 2);
+		return (0);
+	}
+
+	ft_memset(game->map, 0, sizeof(t_map));
+	game->map->grid = malloc(9 * sizeof(char *));
+	game->map->grid[0] = malloc(9 * sizeof(char));
+	game->map->grid[1] = malloc(9 * sizeof(char));
+	game->map->grid[2] = malloc(9 * sizeof(char));
+	game->map->grid[3] = malloc(9 * sizeof(char));
+	game->map->grid[4] = malloc(9 * sizeof(char));
+	game->map->grid[5] = malloc(9 * sizeof(char));
+	game->map->grid[6] = malloc(9 * sizeof(char));
+	game->map->grid[7] = malloc(9 * sizeof(char));
+	game->map->grid[8] = malloc(9 * sizeof(char));
+	game->map->grid[0] = ft_strdup("11111111");
+	game->map->grid[1] = ft_strdup("10100001");
+	game->map->grid[2] = ft_strdup("10100001");
+	game->map->grid[3] = ft_strdup("10100001");
+	game->map->grid[4] = ft_strdup("1000PC01");
+	game->map->grid[5] = ft_strdup("10000101");
+	game->map->grid[6] = ft_strdup("10000001");
+	game->map->grid[7] = ft_strdup("11111111");
+	game->map->width = 8;
+	game->map->height = 8;
+
+	// if (!parse_map(game, map_path) || !validate_map(game->map))
+	// {
+	// 	free_map(game->map);
+	// 	return (0);
+	// }
+	// if (!is_map_solvable(game->map))
+	// {
+	// 	free_map(game->map);
+	// 	ft_putstr_fd(ERR_MAP_IMPOSSIBLE, 2);
+	// 	return (0);
+	// }
+	return (1);
+}
+
+static void	init_game_values(t_game *game)
+{
+	int	y;
+	int	x;
+
+	game->collected = 0;
+	game->moves = 0;
+	y = 0;
+	while (y < game->map->height)
+	{
+		x = 0;
+		while (x < game->map->width)
+		{
+			if (game->map->grid[y][x] == PLAYER)
+			{
+				game->player_x = x;
+				game->player_y = y;
+				printf("player is in %d, %d\n", x, y);
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+int	init_game(t_game *game, char *map_path)
+{
+	// if (!check_map_extension(map_path))
+	// {
+	// 	ft_putstr_fd(ERR_MAP_EXT, 2);
+	// 	return (0);
+	// }
+	// ft_memset(game, 0, sizeof(t_game));
+	if (!init_map_struct(game, map_path))
+		return (0);
+	if (!init_mlx(game))
+		return (0);
+	if (!init_textures(game))
+	{
+		cleanup_game(game);
+		ft_putstr_fd(ERR_LOAD_TEXTURES, 2);
+		return (0);
+	}
+	init_game_values(game);
+	render_map(game);
+	return (1);
+}

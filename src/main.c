@@ -12,12 +12,18 @@
 
 #include "../includes/cub.h"
 
-int	main(
-	int ac,
-	char **av)
+int	main(int argc, char **argv)
 {
-	if (ac != 2)
-		error_exit("Usage: ./cub3d <map.cub>");
-	read_map(av[1]);
+
+	t_game	game;
+
+	(void)argc;
+	(void)argv;
+	init_game(&game);
+	draw_square(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 10, get_rgba(255, 0, 0, 255), &game);
+	mlx_key_hook(game.mlx, handle_input, &game);
+	mlx_loop_hook(game.mlx, draw_loop, &game);
+	// draw_loop(&game);
+	mlx_loop(game.mlx);
 	return (0);
 }

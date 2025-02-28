@@ -19,13 +19,13 @@
 # include <math.h>
 
 // Configuration constants
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1800
+# define WINDOW_HEIGHT 1080
 # define PI 3.14159265358979
 
 // Game constants
 # define ANGLE_SPEED 0.1
-# define BLOCK_SIZE 64
+# define BLOCK_SIZE 100
 # define PLAYER_SPEED 20
 # define ROTATION_SPEED 0.05
 

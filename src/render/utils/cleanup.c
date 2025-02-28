@@ -20,12 +20,12 @@ int get_rgba(int r, int g, int b, int a)
 int load_textures(t_game *game)
 {
 	// Chargement texture Nord
-	game->texture_north = mlx_load_png("src/render/assets/wall.png");
+	game->texture_north = mlx_load_png("src/render/assets/wolftextures2.png");
 	if (!game->texture_north)
 		return (0);
 
 	// Chargement texture Sud
-	game->texture_south = mlx_load_png("src/render/assets/player.png");
+	game->texture_south = mlx_load_png("src/render/assets/wolftextures2.png");
 	if (!game->texture_south)
 	{
 		mlx_delete_texture(game->texture_north);
@@ -33,7 +33,7 @@ int load_textures(t_game *game)
 	}
 
 	// Chargement texture Est
-	game->texture_east = mlx_load_png("src/render/assets/collectible.png");
+	game->texture_east = mlx_load_png("src/render/assets/wolftextures2.png");
 	if (!game->texture_east)
 	{
 		mlx_delete_texture(game->texture_north);
@@ -42,7 +42,7 @@ int load_textures(t_game *game)
 	}
 
 	// Chargement texture Ouest
-	game->texture_west = mlx_load_png("src/render/assets/exit.png");
+	game->texture_west = mlx_load_png("src/render/assets/wolftextures2.png");
 	if (!game->texture_west)
 	{
 		mlx_delete_texture(game->texture_north);
@@ -163,36 +163,46 @@ double fixed_dist(double x1, double y1, double x2, double y2, t_game *game) {
 
 void draw_line(t_game *game, double fx, int i)
 {
-    double ray_x = game->player.x;
-    double ray_y = game->player.y;
-    double cos_angle = cos(fx);
-    double sin_angle = sin(fx);
-    int side = 0;
-    mlx_texture_t *texture;
+	double ray_x = game->player.x;
+	double ray_y = game->player.y;
+	double cos_angle = cos(fx);
+	double sin_angle = sin(fx);
+	int side = 0;
+	mlx_texture_t *texture;
 
-    while (!touch(ray_x, ray_y, game)) {
-        ray_x += cos_angle;
-        ray_y += sin_angle;
-    }
+	// Ajout d'une petite valeur epsilon pour éviter la division par zéro
+	const double epsilon = 0.000001;
+	if (fabs(cos_angle) < epsilon)
+		cos_angle = epsilon;
+	if (fabs(sin_angle) < epsilon)
+		sin_angle = epsilon;
 
-    double wall_x;
-    if (cos_angle > 0) {
-        side = 0;
-        texture = game->texture_north;
-        wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
-    } else if (cos_angle < 0) {
-        side = 0;
-        texture = game->texture_south;
-        wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
-    } else if (sin_angle > 0) {
-        side = 1;
-        texture = game->texture_east;
-        wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
-    } else {
-        side = 1;
-        texture = game->texture_west;
-        wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
-    }
+	while (!touch(ray_x, ray_y, game)) {
+		ray_x += cos_angle;
+		ray_y += sin_angle;
+	}
+
+	double wall_x;
+	// Modification de la détection des côtés
+	if (fabs(cos_angle) > fabs(sin_angle)) {
+		side = 0;
+		if (cos_angle > 0) {
+			texture = game->texture_north;
+			wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
+		} else {
+			texture = game->texture_south;
+			wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
+		}
+	} else {
+		side = 1;
+		if (sin_angle > 0) {
+			texture = game->texture_east;
+			wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
+		} else {
+			texture = game->texture_west;
+			wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
+		}
+	}
 
     double dist = fixed_dist(game->player.x, game->player.y, ray_x, ray_y, game);
     double height = (BLOCK_SIZE / dist) * (WINDOW_WIDTH / 2);
@@ -219,9 +229,9 @@ void draw_line(t_game *game, double fx, int i)
             double shade = 1.0 - (dist / (WINDOW_WIDTH / 2));
             if (shade < 0.0) shade = 0.0;
 
-            uint8_t r = pixel[0] * shade;
-            uint8_t g = pixel[1] * shade;
-            uint8_t b = pixel[2] * shade;
+            uint8_t r = pixel[0] * 1;
+            uint8_t g = pixel[1] * 1;
+            uint8_t b = pixel[2] * 1;
             uint8_t a = pixel[3];
 
             mlx_put_pixel(game->image_global, i, y, get_rgba(r, g, b, a));
@@ -295,13 +305,13 @@ void draw_loop(void *param)
 
 	t_game* game = (t_game*)param;
 
-	t_player *player = &game->player;
+	// t_player *player = &game->player;
 	if (x != game->player.x || y != game->player.y	|| angle !=	game->player.angle) {
 		clear_image(game);
 		draw_background(game);
-		draw_map(*game);
-		draw_square(player->x, player->y, 5, get_rgba(255, 0, 0, 255), game);
-		draw_line(game, x, y);
+		// draw_map(*game);
+		// draw_square(player->x, player->y, 5, get_rgba(255, 0, 0, 255), game);
+		// draw_line(game, x, y);
 
 	    double fraction = PI / 3 / WINDOW_WIDTH;
 		double start_x = game->player.angle - PI / 6;
@@ -316,6 +326,11 @@ void draw_loop(void *param)
 		x = game->player.x;
 		y = game->player.y;
 		angle = game->player.angle;
+
+		//DEGUB
+		printf("POSITION : %f %f\n", game->player.x, game->player.y);
+		printf("ANGLE : %f\n", game->player.angle);
+		//FIN DEBUB
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/02/28 14:32:59 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/02/28 16:23:12 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int get_rgba(int r, int g, int b, int a)
 int load_textures(t_game *game)
 {
 	// Chargement texture Nord
-	game->texture_north = mlx_load_png("src/render/assets/wolftextures2.png");
+	game->texture_north = mlx_load_png("src/render/assets/wolftextures1.png");
 	if (!game->texture_north)
 		return (0);
 
@@ -33,7 +33,7 @@ int load_textures(t_game *game)
 	}
 
 	// Chargement texture Est
-	game->texture_east = mlx_load_png("src/render/assets/wolftextures2.png");
+	game->texture_east = mlx_load_png("src/render/assets/wolftextures3.png");
 	if (!game->texture_east)
 	{
 		mlx_delete_texture(game->texture_north);
@@ -42,7 +42,7 @@ int load_textures(t_game *game)
 	}
 
 	// Chargement texture Ouest
-	game->texture_west = mlx_load_png("src/render/assets/wolftextures2.png");
+	game->texture_west = mlx_load_png("src/render/assets/wolftextures4.png");
 	if (!game->texture_west)
 	{
 		mlx_delete_texture(game->texture_north);
@@ -143,13 +143,14 @@ double distance(float x, float y){
 }
 
 bool touch(double px, double py, t_game *game) {
+    int x = (int)(px / BLOCK_SIZE);
+    int y = (int)(py / BLOCK_SIZE);
 
-	int x = px / BLOCK_SIZE;
-	int y = py / BLOCK_SIZE;
-	if (game->map[y][x] == '1') {
-		return (true);
-	}
-	return (false);
+    // Vérification des limites de la carte
+    if (x < 0 || y < 0 || !game->map[y] || !game->map[y][x])
+        return true;
+
+    return (game->map[y][x] == '1');
 }
 
 double fixed_dist(double x1, double y1, double x2, double y2, t_game *game) {
@@ -161,82 +162,134 @@ double fixed_dist(double x1, double y1, double x2, double y2, t_game *game) {
 	return (fix_dist);
 }
 
+double ft_clamp(double value, double min, double max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+}
+
 void draw_line(t_game *game, double fx, int i)
 {
-	double ray_x = game->player.x;
-	double ray_y = game->player.y;
-	double cos_angle = cos(fx);
-	double sin_angle = sin(fx);
-	int side = 0;
-	mlx_texture_t *texture;
+    double ray_x = game->player.x;
+    double ray_y = game->player.y;
+    double cos_angle = cos(fx);
+    double sin_angle = sin(fx);
+    int side = 0;
+    mlx_texture_t *texture;
+    double wall_dist;
+    int tex_x;
 
-	// Ajout d'une petite valeur epsilon pour éviter la division par zéro
-	const double epsilon = 0.000001;
-	if (fabs(cos_angle) < epsilon)
-		cos_angle = epsilon;
-	if (fabs(sin_angle) < epsilon)
-		sin_angle = epsilon;
+    // Calcul du DDA (Digital Differential Analyzer)
+    double delta_dist_x = (cos_angle == 0) ? 1e30 : fabs(1.0 / cos_angle);
+    double delta_dist_y = (sin_angle == 0) ? 1e30 : fabs(1.0 / sin_angle);
 
-	while (!touch(ray_x, ray_y, game)) {
-		ray_x += cos_angle;
-		ray_y += sin_angle;
-	}
+    int map_x = (int)(ray_x / BLOCK_SIZE);
+    int map_y = (int)(ray_y / BLOCK_SIZE);
 
-	double wall_x;
-	// Modification de la détection des côtés
-	if (fabs(cos_angle) > fabs(sin_angle)) {
-		side = 0;
-		if (cos_angle > 0) {
-			texture = game->texture_north;
-			wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
-		} else {
-			texture = game->texture_south;
-			wall_x = ray_y / BLOCK_SIZE - floor(ray_y / BLOCK_SIZE);
-		}
-	} else {
-		side = 1;
-		if (sin_angle > 0) {
-			texture = game->texture_east;
-			wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
-		} else {
-			texture = game->texture_west;
-			wall_x = ray_x / BLOCK_SIZE - floor(ray_x / BLOCK_SIZE);
-		}
-	}
+    double side_dist_x;
+    double side_dist_y;
+    int step_x;
+    int step_y;
 
-    double dist = fixed_dist(game->player.x, game->player.y, ray_x, ray_y, game);
-    double height = (BLOCK_SIZE / dist) * (WINDOW_WIDTH / 2);
-    int start_y = (WINDOW_HEIGHT - height) / 2;
-    int end = start_y + height;
+    // Calcul du pas et de la distance initiale
+    if (cos_angle < 0)
+    {
+        step_x = -1;
+        side_dist_x = (ray_x - map_x * BLOCK_SIZE) * delta_dist_x;
+    }
+    else
+    {
+        step_x = 1;
+        side_dist_x = ((map_x + 1.0) * BLOCK_SIZE - ray_x) * delta_dist_x;
+    }
+    if (sin_angle < 0)
+    {
+        step_y = -1;
+        side_dist_y = (ray_y - map_y * BLOCK_SIZE) * delta_dist_y;
+    }
+    else
+    {
+        step_y = 1;
+        side_dist_y = ((map_y + 1.0) * BLOCK_SIZE - ray_y) * delta_dist_y;
+    }
 
-    if (start_y < 0) start_y = 0;
-    if (end > WINDOW_HEIGHT) end = WINDOW_HEIGHT;
+    // DDA
+    bool hit = false;
+    while (!hit)
+    {
+        if (side_dist_x < side_dist_y)
+        {
+            side_dist_x += delta_dist_x * BLOCK_SIZE;
+            map_x += step_x;
+            side = 0;
+        }
+        else
+        {
+            side_dist_y += delta_dist_y * BLOCK_SIZE;
+            map_y += step_y;
+            side = 1;
+        }
 
-    int tex_x = (int)(wall_x * texture->width);
+        if (map_x < 0 || map_y < 0 || !game->map[map_y] || !game->map[map_y][map_x])
+            break;
+
+        if (game->map[map_y][map_x] == '1')
+            hit = true;
+    }
+
+    // Calcul de la distance et de la hauteur du mur
+    double wall_x;
+    if (side == 0)
+    {
+        wall_dist = (side_dist_x - delta_dist_x * BLOCK_SIZE);
+        texture = (cos_angle > 0) ? game->texture_north : game->texture_south;
+        wall_x = ray_y + wall_dist * sin_angle;
+        wall_x = wall_x - floor(wall_x / BLOCK_SIZE) * BLOCK_SIZE;
+    }
+    else
+    {
+        wall_dist = (side_dist_y - delta_dist_y * BLOCK_SIZE);
+        texture = (sin_angle > 0) ? game->texture_east : game->texture_west;
+        wall_x = ray_x + wall_dist * cos_angle;
+        wall_x = wall_x - floor(wall_x / BLOCK_SIZE) * BLOCK_SIZE;
+    }
+
+    // Calcul des coordonnées de texture
+    tex_x = (int)(wall_x * texture->width / BLOCK_SIZE);
     if ((side == 0 && cos_angle > 0) || (side == 1 && sin_angle < 0))
         tex_x = texture->width - tex_x - 1;
+    tex_x = ft_clamp(tex_x, 0, texture->width - 1);
 
-    if (i >= 0 && i < WINDOW_WIDTH)
+    // Calcul de la hauteur de la ligne
+    double perp_wall_dist = wall_dist * cos(fx - game->player.angle);
+    int line_height = (int)(WINDOW_HEIGHT / perp_wall_dist * BLOCK_SIZE);
+
+    int draw_start = -line_height / 2 + WINDOW_HEIGHT / 2;
+    if (draw_start < 0)
+        draw_start = 0;
+    int draw_end = line_height / 2 + WINDOW_HEIGHT / 2;
+    if (draw_end >= WINDOW_HEIGHT)
+        draw_end = WINDOW_HEIGHT - 1;
+
+    // Rendu de la texture
+    double step = (double)texture->height / line_height;
+    double tex_pos = (draw_start - WINDOW_HEIGHT / 2 + line_height / 2) * step;
+
+    for (int y = draw_start; y <= draw_end; y++)
     {
-        double step = (double)texture->height / height;
-        double tex_pos = (start_y - (WINDOW_HEIGHT - height) / 2) * step;
+        int tex_y = (int)tex_pos & (texture->height - 1);
+        uint8_t *pixel = &texture->pixels[(tex_y * texture->width + tex_x) * texture->bytes_per_pixel];
 
-        for (int y = start_y; y < end; y++)
-        {
-            int tex_y = (int)tex_pos & (texture->height - 1);
-            uint8_t *pixel = &texture->pixels[(tex_y * texture->width + tex_x) * texture->bytes_per_pixel];
+        double shade = ft_clamp(1.0 - (perp_wall_dist / (WINDOW_WIDTH * 0.7)), 0.3, 1.0);
 
-            double shade = 1.0 - (dist / (WINDOW_WIDTH / 2));
-            if (shade < 0.0) shade = 0.0;
+        uint8_t r = (uint8_t)(pixel[0] * shade);
+        uint8_t g = (uint8_t)(pixel[1] * shade);
+        uint8_t b = (uint8_t)(pixel[2] * shade);
+        uint8_t a = pixel[3];
 
-            uint8_t r = pixel[0] * 1;
-            uint8_t g = pixel[1] * 1;
-            uint8_t b = pixel[2] * 1;
-            uint8_t a = pixel[3];
-
-            mlx_put_pixel(game->image_global, i, y, get_rgba(r, g, b, a));
-            tex_pos += step;
-        }
+        mlx_put_pixel(game->image_global, i, y, get_rgba(r, g, b, a));
+        tex_pos += step;
     }
 }
 

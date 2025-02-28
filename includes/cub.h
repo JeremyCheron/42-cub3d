@@ -6,7 +6,7 @@
 /*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/02/28 14:32:59 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/02/28 16:15:21 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,23 @@
 # include <math.h>
 
 // Configuration constants
-# define WINDOW_WIDTH 1800
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
 # define PI 3.14159265358979
 
 // Game constants
 # define ANGLE_SPEED 0.1
-# define BLOCK_SIZE 100
+# define BLOCK_SIZE 64
 # define PLAYER_SPEED 20
 # define ROTATION_SPEED 0.05
 
+typedef struct s_config
+{
+	char    *north_texture;
+	char    *south_texture;
+	char    *east_texture;
+	char    *west_texture;
+} t_config;
 
 typedef struct s_player
 {
@@ -43,6 +50,7 @@ typedef struct s_game
 	void            *win;
 	mlx_image_t     *image_global;
 	t_player        player;
+	t_config        config;
 	char            **map;
 	mlx_texture_t   *texture_north;
 	mlx_texture_t   *texture_south;

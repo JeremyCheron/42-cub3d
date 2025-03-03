@@ -14,22 +14,14 @@
 #include "../includes/render.h"
 #include "../includes/player.h"
 
-/**
- * @brief 🎮 Configure les hooks pour les événements du jeu
- * @param game Pointeur vers la structure du jeu
- */
+
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, handle_input, game);
 	mlx_loop_hook(game->mlx, draw_loop, game);
 }
 
-/**
- * @brief 🔍 Vérifie les arguments du programme
- * @param argc Nombre d'arguments
- * @param argv Tableau des arguments
- * @return true si les arguments sont valides, false sinon
- */
+
 static bool	check_args(int argc, char **argv)
 {
 	if (argc != 2)
@@ -45,12 +37,7 @@ static bool	check_args(int argc, char **argv)
 	return (true);
 }
 
-/**
- * @brief 🎯 Point d'entrée principal du programme
- * @param argc Nombre d'arguments
- * @param argv Tableau des arguments
- * @return 0 en cas de succès, 1 en cas d'erreur
- */
+
 int	main(int argc, char **argv)
 {
 	t_game	game;

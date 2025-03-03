@@ -6,7 +6,7 @@
 /*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/02/28 16:15:21 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/03 12:51:54 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <math.h>
 
 // Configuration constants
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 1800
+# define WINDOW_HEIGHT 1080
 # define PI 3.14159265358979
 
 // Game constants
@@ -59,9 +59,10 @@ typedef struct s_game
 } t_game;
 
 
-void init_game(t_game *game);
+// void init_game(t_game *game);
 int			init_textures(t_game *game);
 void draw_square(int x, int y, int size, int color, t_game *game);
+char ** get_map(void);
 int			get_rgba(int r, int g, int b, int a);
 void	handle_input(mlx_key_data_t keydata, void *param);
 void init_player(t_player *player);

@@ -52,11 +52,21 @@ endif
 
 SRCS = 	src/main.c \
 		src/errors/errors.c \
+		\
 		src/parsing/map_parser.c \
 		src/parsing/read_map.c \
 		src/parsing/parser_utils.c \
-		src/render/utils/cleanup.c \
-		src/render/utils/utils.c \
+		\
+		src/render/draw/draw_utils.c \
+		src/render/draw/draw_background.c \
+		src/render/raycasting/ray_utils.c \
+		src/render/raycasting/ray_cast.c \
+		src/render/raycasting/ray_draw.c \
+		src/render/loop.c \
+		\
+		src/render/player/player_init.c \
+		src/render/player/collision.c \
+		src/render/player/movement.c
 
 OBJS = $(SRCS:.c=.o)
 

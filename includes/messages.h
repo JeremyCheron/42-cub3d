@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   messages.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 17:42:18 by jcheron           #+#    #+#             */
-/*   Updated: 2025/02/20 17:46:00 by jcheron          ###   ########.fr       */
+/*   Created: 2025/03/11 08:14:38 by jcheron           #+#    #+#             */
+/*   Updated: 2025/03/11 08:19:32 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub.h"
+#ifndef MESSAGES_H
+# define MESSAGES_H
 
-// static bool	_is_cub_file(
-// 	char *filename)
-// {
-// 	size_t	len;
+# define PROG_NAME			"Cub3D"
 
-// 	len = ft_strlen(filename);
-// 	if (len < 4)
-// 		return (false);
-// 	printf("%s", ft_strchr(filename, '.'));
-// 	return true;
-// }
+# define ERR_FILE_IS_DIR	"is a directory"
+# define ERR_FILE_NOT_CUB	"not a .cub file"
+# define ERR_OPEN_FILE		"could not open file"
+
+#endif

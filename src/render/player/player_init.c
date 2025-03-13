@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/03 13:28:33 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/13 11:03:02 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@ void	init_player(t_player *player)
  * @brief 🗺️ Crée une carte de test
  * @return Tableau de chaînes représentant la carte
  */
-static char	**create_test_map(void)
-{
-	char	**map;
+// static char	**create_test_map(void)
+// {
+// 	char	**map;
 
-	map = malloc(sizeof(char *) * 11);
-	if (!map)
-		return (NULL);
-	map[0] = ft_strdup("1111111111111111");
-	map[1] = ft_strdup("1000000000000001");
-	map[2] = ft_strdup("1000000000000001");
-	map[3] = ft_strdup("1000000000000001");
-	map[4] = ft_strdup("1000010000000001");
-	map[5] = ft_strdup("1000000000000001");
-	map[6] = ft_strdup("1000000000000001");
-	map[7] = ft_strdup("1000000001100001");
-	map[8] = ft_strdup("1000000000100001");
-	map[9] = ft_strdup("1111111111111111");
-	map[10] = NULL;
-	return (map);
-}
+// 	map = malloc(sizeof(char *) * 11);
+// 	if (!map)
+// 		return (NULL);
+// 	map[0] = ft_strdup("1111111111111111");
+// 	map[1] = ft_strdup("1000000000000001");
+// 	map[2] = ft_strdup("1000000000000001");
+// 	map[3] = ft_strdup("1000000000000001");
+// 	map[4] = ft_strdup("1000010000000001");
+// 	map[5] = ft_strdup("1000000000000001");
+// 	map[6] = ft_strdup("1000000000000001");
+// 	map[7] = ft_strdup("1000000001100001");
+// 	map[8] = ft_strdup("1000000000100001");
+// 	map[9] = ft_strdup("1111111111111111");
+// 	map[10] = NULL;
+// 	return (map);
+// }
 
 /**
  * @brief 🎨 Charge les textures du jeu
@@ -88,7 +88,7 @@ bool	init_game(t_game *game)
 		mlx_terminate(game->mlx);
 		return (false);
 	}
-	game->map = create_test_map();
+	// game->map = create_test_map();
 	if (!game->map)
 	{
 		mlx_delete_image(game->mlx, game->image_global);

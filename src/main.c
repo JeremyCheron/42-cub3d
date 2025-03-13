@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/03 13:11:40 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/13 08:12:59 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 #include "../includes/render.h"
 #include "../includes/player.h"
 
-
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, handle_input, game);
 	mlx_loop_hook(game->mlx, draw_loop, game);
 }
-
 
 static bool	check_args(int argc, char **argv)
 {
@@ -37,13 +35,15 @@ static bool	check_args(int argc, char **argv)
 	return (true);
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	if (check_args(argc, argv)) // a modifier (ajouter le !)
+	if (!check_args(argc, argv)) // a modifier (ajouter le !)
 		return (1);
+	if (argc != 2)
+		error_exit(argv[0], "Usage: ./cub3D <map.cub>");
+	read_map(argv[1], &game);
 	if (!init_game(&game))
 	{
 		ft_putendl_fd("Error\nFailed to initialize game", 2);

@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/13 11:03:02 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/13 11:10:23 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
  */
 void	init_player(t_player *player)
 {
-	player->x = WINDOW_WIDTH / 2;
-	player->y = WINDOW_HEIGHT / 2;
 	player->angle = PI * 1.5;
 }
 

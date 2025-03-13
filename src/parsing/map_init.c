@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 07:50:31 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/13 07:53:58 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/13 11:11:01 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	set_player_position(t_game *game, char c, int x, int y)
 {
-	game->player.x = x;
-	game->player.y = y;
+	game->player.x = x * BLOCK_SIZE;
+	game->player.y = y * BLOCK_SIZE;
 	game->player.dir = c;
 }
 

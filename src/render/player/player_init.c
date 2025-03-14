@@ -26,10 +26,10 @@ void	print_game_infos(t_game *game)
 	printf("👀 Player angle: %.2f\n", game->player.angle);
 	printf("🏃 Player speed: %.2d\n", PLAYER_SPEED);
 	printf("🤖 Player angle speed: %.2f\n\n", ANGLE_SPEED);
-	printf("🗺️ N Texture path: %s\n", "src/render/assets/wolftextures1.png");
-	printf("🗺️ S Texture path: %s\n", "src/render/assets/wolftextures2.png");
-	printf("🗺️ W Texture path: %s\n", "src/render/assets/wolftextures3.png");
-	printf("🗺️ E Texture path: %s\n", "src/render/assets/wolftextures4.png");
+	printf("🗺️ N Texture path: %s\n", game->config.north_texture);
+	printf("🗺️ S Texture path: %s\n", game->config.south_texture);
+	printf("🗺️ W Texture path: %s\n", game->config.west_texture);
+	printf("🗺️ E Texture path: %s\n", game->config.east_texture);
 	printf("🔵 Celling color : %d, %d, %d\n", \
 		game->config.ceiling_color[0], game->config.ceiling_color[1], \
 		game->config.ceiling_color[2]);
@@ -47,16 +47,16 @@ void	print_game_infos(t_game *game)
  */
 static bool	load_game_textures(t_game *game)
 {
-	game->texture_north = mlx_load_png("src/render/assets/wolftextures1.png");
+	game->texture_north = mlx_load_png(game->config.north_texture);
 	if (!game->texture_north)
 		return (false);
-	game->texture_south = mlx_load_png("src/render/assets/wolftextures2.png");
+	game->texture_south = mlx_load_png(game->config.south_texture);
 	if (!game->texture_south)
 		return (false);
-	game->texture_east = mlx_load_png("src/render/assets/wolftextures3.png");
+	game->texture_east = mlx_load_png(game->config.east_texture);
 	if (!game->texture_east)
 		return (false);
-	game->texture_west = mlx_load_png("src/render/assets/wolftextures4.png");
+	game->texture_west = mlx_load_png(game->config.west_texture);
 	if (!game->texture_west)
 		return (false);
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/03 13:28:11 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/14 13:37:30 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static void	draw_sky(t_game *game)
 		while (x < WINDOW_WIDTH)
 		{
 			mlx_put_pixel(game->image_global, x, y, \
-			get_rgba(120, 190, 255, 255));
+			get_rgba(game->config.ceiling_color[0], \
+				game->config.ceiling_color[1], \
+				game->config.ceiling_color[2], 255));
 			x++;
 		}
 		y++;
@@ -50,7 +52,10 @@ static void	draw_ground(t_game *game)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			mlx_put_pixel(game->image_global, x, y, get_rgba(63, 155, 11, 255));
+			mlx_put_pixel(game->image_global, x, y, \
+			get_rgba(game->config.floor_color[0], \
+				game->config.floor_color[1], \
+				game->config.floor_color[2], 255));
 			x++;
 		}
 		y++;

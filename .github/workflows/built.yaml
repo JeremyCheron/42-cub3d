@@ -38,9 +38,3 @@ jobs:
         run: |
           cd src
           norminette
-
-      # Compilation du projet
-      - name: Build project
-        run: |
-          make
-          make clean

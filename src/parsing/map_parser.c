@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:59:20 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/13 08:16:12 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/14 13:38:37 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	parse_file(char *filename, t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (ft_strchr(line, '1'))
+		if (line[0] == '1')
 			process_map_line(game, line, y++);
 		else
 			process_config_line(game, line);

@@ -42,7 +42,7 @@ char	**read_map(
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (ft_strchr(line, '1'))
+		if (line[0] == '1')
 		{
 			process_map_line(game, line, y);
 			y++;

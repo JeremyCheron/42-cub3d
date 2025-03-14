@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 07:50:31 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/13 11:11:01 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/14 13:39:03 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@ void	set_player_position(t_game *game, char c, int x, int y)
 {
 	game->player.x = x * BLOCK_SIZE;
 	game->player.y = y * BLOCK_SIZE;
-	game->player.dir = c;
+	if (c == 'N')
+		game->player.angle = PI * 1.5;
+	else if (c == 'S')
+		game->player.angle = PI / 2;
+	else if (c == 'E')
+		game->player.angle = 0;
+	else if (c == 'W')
+		game->player.angle = PI;
+	else
+		return ;
 }
 
 void	process_map_line(t_game *game, char *line, int y)

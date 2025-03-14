@@ -1,10 +1,10 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO src/render/assets/wolftextures1.png
+SO src/render/assets/wolftextures2.png
+WE src/render/assets/wolftextures3.png
+EA src/render/assets/wolftextures4.png
 
-F 220,100,0
-C 225,30,0
+F 25,250,25
+C 25,25,250
 
 1111111111111111111111111
 1000000000110000000000001

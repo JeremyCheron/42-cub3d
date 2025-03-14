@@ -31,7 +31,7 @@ static bool	is_dir(
 {
 	int	fd;
 
-	fd = open(filename, __O_DIRECTORY);
+	fd = open(filename, O_DIRECTORY);
 	if (fd >= 0)
 		return (close(fd), true);
 	return (false);

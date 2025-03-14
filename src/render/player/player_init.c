@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/13 11:10:23 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/14 13:38:22 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,27 @@
  * @brief 🎮 Initialise la position et l'orientation du joueur
  * @param player Pointeur vers la structure du joueur
  */
-void	init_player(t_player *player)
+void	print_game_infos(t_game *game)
 {
-	player->angle = PI * 1.5;
+	printf("\n===== Cub3D =====\n");
+	printf("🪟 Window size: %dx%d\n", WINDOW_WIDTH, WINDOW_HEIGHT);
+	printf("🧍 Player position: (%.2f, %.2f)\n", game->player.x, game->player.y);
+	printf("👀 Player angle: %.2f\n", game->player.angle);
+	printf("🏃 Player speed: %.2d\n", PLAYER_SPEED);
+	printf("🤖 Player angle speed: %.2f\n\n", ANGLE_SPEED);
+	printf("🗺️ N Texture path: %s\n", "src/render/assets/wolftextures1.png");
+	printf("🗺️ S Texture path: %s\n", "src/render/assets/wolftextures2.png");
+	printf("🗺️ W Texture path: %s\n", "src/render/assets/wolftextures3.png");
+	printf("🗺️ E Texture path: %s\n", "src/render/assets/wolftextures4.png");
+	printf("🔵 Celling color : %d, %d, %d\n", \
+		game->config.ceiling_color[0], game->config.ceiling_color[1], \
+		game->config.ceiling_color[2]);
+	printf("🟢 Floor color : %d, %d, %d\n", \
+		game->config.floor_color[0], game->config.floor_color[1], \
+		game->config.floor_color[2]);
+	printf("=================\n\n");
+	return ;
 }
-
-/**
- * @brief 🗺️ Crée une carte de test
- * @return Tableau de chaînes représentant la carte
- */
-// static char	**create_test_map(void)
-// {
-// 	char	**map;
-
-// 	map = malloc(sizeof(char *) * 11);
-// 	if (!map)
-// 		return (NULL);
-// 	map[0] = ft_strdup("1111111111111111");
-// 	map[1] = ft_strdup("1000000000000001");
-// 	map[2] = ft_strdup("1000000000000001");
-// 	map[3] = ft_strdup("1000000000000001");
-// 	map[4] = ft_strdup("1000010000000001");
-// 	map[5] = ft_strdup("1000000000000001");
-// 	map[6] = ft_strdup("1000000000000001");
-// 	map[7] = ft_strdup("1000000001100001");
-// 	map[8] = ft_strdup("1000000000100001");
-// 	map[9] = ft_strdup("1111111111111111");
-// 	map[10] = NULL;
-// 	return (map);
-// }
 
 /**
  * @brief 🎨 Charge les textures du jeu
@@ -86,20 +78,19 @@ bool	init_game(t_game *game)
 		mlx_terminate(game->mlx);
 		return (false);
 	}
-	// game->map = create_test_map();
 	if (!game->map)
 	{
 		mlx_delete_image(game->mlx, game->image_global);
 		mlx_terminate(game->mlx);
 		return (false);
 	}
-	init_player(&game->player);
 	if (!load_game_textures(game))
 	{
 		mlx_delete_image(game->mlx, game->image_global);
 		mlx_terminate(game->mlx);
 		return (false);
 	}
+	print_game_infos(game);
 	mlx_image_to_window(game->mlx, game->image_global, 0, 0);
 	return (true);
 }

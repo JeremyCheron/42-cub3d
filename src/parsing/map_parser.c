@@ -90,7 +90,7 @@ int	parse_file(char *filename, t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '1')
+		if (line[0] == '1') //TODO : Refaire la condition
 			process_map_line(game, line, y++);
 		else
 			process_config_line(game, line);

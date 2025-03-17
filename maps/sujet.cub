@@ -1,7 +1,7 @@
-NO src/render/assets/wolftextures1.png
-SO src/render/assets/wolftextures2.png
-WE src/render/assets/wolftextures3.png
-EA src/render/assets/wolftextures4.png
+NO assets/wolftextures1.png
+SO assets/wolftextures2.png
+WE assets/wolftextures3.png
+EA assets/wolftextures4.png
 
 F 25,250,25
 C 25,25,250

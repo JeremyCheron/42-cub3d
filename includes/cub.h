@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/13 11:04:34 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:15:02 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void		process_map_line(t_game *game, char *line, int y);
 int			parse_color(char *line, int color[3]);
 int			set_texture(char **texture, char *line);
 char		**append_line_to_map(char **map, char *line);
+void		free_map(char **map);
+void		clear_game(t_game *game);
 
 #endif

@@ -52,6 +52,7 @@ endif
 
 SRCS = 	src/main.c \
 		src/errors/errors.c \
+		src/cleanup.c \
 		\
 		src/parsing/map_parser.c \
 		src/parsing/read_map.c \

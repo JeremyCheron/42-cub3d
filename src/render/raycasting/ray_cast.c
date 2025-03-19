@@ -6,7 +6,7 @@
 /*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/03 13:17:05 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/19 10:25:27 by edetoh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,18 @@ void	draw_wall_line(t_ray *ray, t_game *game, int i, double fx)
 {
 	t_wall	wall;
 
+	wall.dist = 0;
+	wall.perp_dist = 0;
+	wall.texture = NULL;
+	wall.x = 0;
+	wall.height = 0;
+	wall.start = 0;
+	wall.end = 0;
+	wall.tex_x = 0;
+	wall.step = 0;
+	wall.cos_angle = 0;
+	wall.sin_angle = 0;
+	wall.side = 0;
 	calculate_wall_params(ray, game, fx, &wall);
 	draw_textured_line(game, &wall, i);
 }

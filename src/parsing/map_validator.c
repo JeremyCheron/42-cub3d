@@ -6,11 +6,12 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:11:10 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 10:15:13 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:35:39 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub.h"
+#include <string.h>
 
 int	get_map_height(t_game *game)
 {
@@ -64,6 +65,27 @@ bool	check_single_spawn(t_game *game)
 	return (true);
 }
 
+bool	check_valid_chars(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (!ft_strchr(" 01NSWE\n", map[i][j])
+				&& map[i][j] != '\n')
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	validate_map(t_game *game)
 {
 	char	**map_copy;
@@ -74,6 +96,11 @@ bool	validate_map(t_game *game)
 	if (!map_copy)
 		error_exit("ERROR: ", "Malloc failed");
 	copy_map(map_copy, game);
+	if (!check_valid_chars(map_copy))
+	{
+		free_map(map_copy);
+		return (false);
+	}
 	if (!check_flood_fill(map_copy, game)
 		|| !check_remaining_zeroes(map_copy, game))
 	{

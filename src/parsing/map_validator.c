@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:11:10 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 12:30:31 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:35:39 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,7 @@ bool	check_valid_chars(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != '0'
-				&& map[i][j] != 'N' && map[i][j] != 'S'
-				&& map[i][j] != 'W' && map[i][j] != 'E'
+			if (!ft_strchr(" 01NSWE\n", map[i][j])
 				&& map[i][j] != '\n')
 				return (false);
 			j++;

@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:41:45 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 07:25:40 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 07:57:47 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**read_map(
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '1') //TODO : Refaire la condition
+		if (ft_isdigit(line[0]))
 		{
 			process_map_line(game, line, y);
 			y++;

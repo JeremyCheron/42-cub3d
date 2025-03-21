@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:59:20 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 07:17:40 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 07:58:11 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	parse_file(char *filename, t_game *game)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (line[0] == '1') //TODO : Refaire la condition
+		if (ft_isdigit(line[0]))
 			process_map_line(game, line, y++);
 		else
 			process_config_line(game, line);

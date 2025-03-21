@@ -59,6 +59,7 @@ SRCS = 	src/main.c \
 		src/parsing/map_utils.c \
 		src/parsing/map_init.c \
 		src/parsing/map_validator.c \
+		src/parsing/flood_fill.c \
 		\
 		src/render/draw/draw_utils.c \
 		src/render/draw/draw_background.c \

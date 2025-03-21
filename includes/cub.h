@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 07:29:41 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 08:02:58 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ char		**append_line_to_map(char **map, char *line);
 void		free_map(char **map);
 void		clear_game(t_game *game);
 void		clear_config(t_config *config);
+int			flood_fill(char **map, int x, int y, t_game *game);
+bool		check_flood_fill(char **map_copy, t_game *game);
+bool		check_remaining_zeroes(char **map_copy, t_game *game);
+int			get_map_height(t_game *game);
 bool		validate_map(t_game *game);
 
 #endif

@@ -65,7 +65,6 @@ typedef struct s_pixel
 
 // Draw utilities
 int		get_rgba(int r, int g, int b, int a);
-void	clear_image(t_game *game);
 double	ft_clamp(double value, double min, double max);
 
 // Background drawing

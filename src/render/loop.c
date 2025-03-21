@@ -53,7 +53,6 @@ void	draw_loop(void *param)
 	if (x != game->player.x || y != game->player.y || \
 		angle != game->player.angle)
 	{
-		clear_image(game);
 		draw_background(game);
 		cast_rays(game);
 		mlx_image_to_window(game->mlx, game->image_global, 0, 0);

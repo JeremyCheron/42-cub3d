@@ -14,8 +14,8 @@
 
 void	set_player_position(t_game *game, char c, int x, int y)
 {
-	game->player.x = x * BLOCK_SIZE;
-	game->player.y = y * BLOCK_SIZE;
+	game->player.x = x * BLOCK_SIZE + (BLOCK_SIZE / 2);
+	game->player.y = y * BLOCK_SIZE + (BLOCK_SIZE / 2);
 	if (c == 'N')
 		game->player.angle = PI * 1.5;
 	else if (c == 'S')

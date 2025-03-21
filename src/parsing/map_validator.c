@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:11:10 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 10:15:13 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 12:13:27 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,31 @@ bool	check_single_spawn(t_game *game)
 	return (true);
 }
 
+bool	check_valid_chars(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < get_map_height(game))
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (!ft_strchr("10NSEW ", game->map[i][j]))
+				return (false);
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	validate_map(t_game *game)
 {
 	char	**map_copy;
 
-	if (!check_single_spawn(game))
+	if (!check_single_spawn(game) || !check_valid_chars(game))
 		return (false);
 	map_copy = malloc(sizeof(char *) * (get_map_height(game) + 1));
 	if (!map_copy)

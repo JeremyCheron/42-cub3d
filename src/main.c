@@ -28,18 +28,6 @@ static void	init_config(t_config *config)
 	config->ceiling_color[2] = -1;
 }
 
-// static void	init_game_struct(t_game *game)
-// {
-// 	game->mlx = NULL;
-// 	game->image_global = NULL;
-// 	init_config(&game->config);
-// 	game->map = NULL;
-// 	game->texture_north = NULL;
-// 	game->texture_south = NULL;
-// 	game->texture_east = NULL;
-// 	game->texture_west = NULL;
-// }
-
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, handle_input, game);

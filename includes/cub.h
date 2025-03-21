@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/19 11:15:02 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/21 07:29:41 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ int			set_texture(char **texture, char *line);
 char		**append_line_to_map(char **map, char *line);
 void		free_map(char **map);
 void		clear_game(t_game *game);
+void		clear_config(t_config *config);
+bool		validate_map(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:11:10 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 08:02:19 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 10:15:13 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,37 @@ void	copy_map(char **dest, t_game *game)
 	dest[i] = NULL;
 }
 
+bool	check_single_spawn(t_game *game)
+{
+	int	i;
+	int	j;
+	int	spawn_count;
+
+	i = 0;
+	spawn_count = 0;
+	while (i < get_map_height(game))
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (game->map[i][j] == 'N' || game->map[i][j] == 'S'
+				|| game->map[i][j] == 'W' || game->map[i][j] == 'E')
+				spawn_count++;
+			j++;
+		}
+		i++;
+	}
+	if (spawn_count != 1)
+		return (false);
+	return (true);
+}
+
 bool	validate_map(t_game *game)
 {
 	char	**map_copy;
 
+	if (!check_single_spawn(game))
+		return (false);
 	map_copy = malloc(sizeof(char *) * (get_map_height(game) + 1));
 	if (!map_copy)
 		error_exit("ERROR: ", "Malloc failed");

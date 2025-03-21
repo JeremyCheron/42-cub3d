@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:59:09 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 08:00:48 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 10:12:13 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ bool	check_flood_fill(char **map_copy, t_game *game)
 		j = 0;
 		while (map_copy[i][j])
 		{
-			if (map_copy[i][j] == '0' || map_copy[i][j] == 'N')
+			if (map_copy[i][j] == '0' || map_copy[i][j] == 'N'
+				|| map_copy[i][j] == 'S' || map_copy[i][j] == 'W'
+				|| map_copy[i][j] == 'E')
 			{
 				if (!flood_fill(map_copy, j, i, game))
 					return (false);

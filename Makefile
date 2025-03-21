@@ -63,7 +63,6 @@ SRCS = 	src/main.c \
 		\
 		src/render/draw/draw_utils.c \
 		src/render/draw/draw_background.c \
-		src/render/raycasting/ray_utils.c \
 		src/render/raycasting/ray_cast.c \
 		src/render/raycasting/ray_draw.c \
 		src/render/loop.c \

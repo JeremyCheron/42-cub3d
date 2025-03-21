@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
-#include "../includes/render.h"
-#include "../includes/player.h"
 
 static void	init_config(t_config *config)
 {

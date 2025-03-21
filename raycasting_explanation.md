@@ -22,9 +22,10 @@ Etape 4 : Boucle principale
 - - Efface l'écran
 - - Dessine le fond (ciel et sol)
 - - Lancer les rayons pour chaque colonne de l'écran
-```c
+
+--- - - Pour chaque colonne, calcule la direction du rayon
+
 cast_rays
-```
 Cast_rays :
 fraction = PI / 3 = 60° Donc le FOV
 / divisé par WINDOW_WIDTH donc une fraction de 60° par pixel

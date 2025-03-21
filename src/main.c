@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/21 07:30:10 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/21 07:47:04 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static void	init_config(t_config *config)
 	config->ceiling_color[2] = -1;
 }
 
-static void	init_game_struct(t_game *game)
-{
-	game->mlx = NULL;
-	game->image_global = NULL;
-	init_config(&game->config);
-	game->map = NULL;
-	game->texture_north = NULL;
-	game->texture_south = NULL;
-	game->texture_east = NULL;
-	game->texture_west = NULL;
-}
+// static void	init_game_struct(t_game *game)
+// {
+// 	game->mlx = NULL;
+// 	game->image_global = NULL;
+// 	init_config(&game->config);
+// 	game->map = NULL;
+// 	game->texture_north = NULL;
+// 	game->texture_south = NULL;
+// 	game->texture_east = NULL;
+// 	game->texture_west = NULL;
+// }
 
 static void	setup_hooks(t_game *game)
 {
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		error_exit(argv[0], "Usage: ./cub3D <map.cub>");
-	init_game_struct(&game);
+	init_config(&game.config);
 	read_map(argv[1], &game);
 	if (!validate_map(&game))
 	{
@@ -68,5 +68,6 @@ int	main(int argc, char **argv)
 	}
 	setup_hooks(&game);
 	mlx_loop(game.mlx);
+	clear_game(&game);
 	return (0);
 }

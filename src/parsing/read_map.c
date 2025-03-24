@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:41:45 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/24 12:25:46 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/24 13:35:28 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	process_line(t_game *game, char *line,
 	else if (line[0] == '\n' && *map_started)
 		handle_invalid_map(game, line);
 	else if (ft_isdigit(line[0])
-		|| (ft_iswhitespace(line[0] && ft_strlen(line) > 1)))
+		|| (line[0] == ' ' && ft_strlen(line) > 1))
 		handle_map_line(game, line, y, map_started);
 }
 

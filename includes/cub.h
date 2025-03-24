@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:36:16 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/19 11:15:02 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/24 11:42:04 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,20 @@ char		**read_map(const char *filename, t_game *game);
 void		error_exit(char *arg, char *message);
 int			parse_file(char *filename, t_game *game);
 void		process_config_line(t_game *game, char *line);
+bool		is_config_line(char *line, t_game *game);
+bool		is_valid_map_line(char *line);
 void		process_map_line(t_game *game, char *line, int y);
 int			parse_color(char *line, int color[3]);
 int			set_texture(char **texture, char *line);
 char		**append_line_to_map(char **map, char *line);
 void		free_map(char **map);
 void		clear_game(t_game *game);
+void		clear_config(t_config *config);
+int			flood_fill(char **map, int x, int y, t_game *game);
+bool		check_flood_fill(char **map_copy, t_game *game);
+bool		check_remaining_zeroes(char **map_copy, t_game *game);
+int			get_map_height(t_game *game);
+bool		validate_map(t_game *game);
+bool		check_single_spawn(t_game *game);
 
 #endif

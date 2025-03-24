@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/03 13:24:38 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/21 08:03:45 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_pixel
 
 // Draw utilities
 int		get_rgba(int r, int g, int b, int a);
-void	clear_image(t_game *game);
 double	ft_clamp(double value, double min, double max);
 
 // Background drawing
@@ -83,7 +82,8 @@ void	detect_wall(t_ray *ray, t_game *game);
 void	draw_wall_line(t_ray *ray, t_game *game, int i, double fx);
 
 // Ray drawing
-void	calculate_wall_params(t_ray *ray, t_game *game, double fx, t_wall *wall);
+void	calculate_wall_params(t_ray *ray, t_game *game,
+			double fx, t_wall *wall);
 void	draw_textured_line(t_game *game, t_wall *wall, int x);
 void	draw_pixel(t_game *game, t_pixel pixel);
 

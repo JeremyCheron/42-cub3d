@@ -26,28 +26,6 @@ int	get_rgba(int r, int g, int b, int a)
 }
 
 /**
- * @brief 🧹 Clears the entire game image with black color
- * @param game Pointer to the game structure
- */
-void	clear_image(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			mlx_put_pixel(game->image_global, x, y, get_rgba(0, 0, 0, 255));
-			x++;
-		}
-		y++;
-	}
-}
-
-/**
  * @brief 📏 Clamps a value between a minimum and maximum
  * @param value Value to clamp
  * @param min Minimum allowed value

@@ -3,7 +3,7 @@
 
 NAME			= cub3D
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror $(GLFW_INC)
+CFLAGS			= -Wall -Wextra -Werror -g $(GLFW_INC)
 MLX42_PATH		= minilibx
 LIBFT_PATH		= libft
 MLX42			= $(MLX42_PATH)/build/libmlx42.a
@@ -58,10 +58,12 @@ SRCS = 	src/main.c \
 		src/parsing/read_map.c \
 		src/parsing/map_utils.c \
 		src/parsing/map_init.c \
+		src/parsing/map_validator.c \
+		src/parsing/flood_fill.c \
+		src/parsing/parser_utils.c \
 		\
 		src/render/draw/draw_utils.c \
 		src/render/draw/draw_background.c \
-		src/render/raycasting/ray_utils.c \
 		src/render/raycasting/ray_cast.c \
 		src/render/raycasting/ray_draw.c \
 		src/render/loop.c \

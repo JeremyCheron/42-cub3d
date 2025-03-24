@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edetoh <edetoh@student.42lehavre.fr>       +#+  +:+       +#+        */
+/*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 07:50:31 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/14 13:39:03 by edetoh           ###   ########.fr       */
+/*   Updated: 2025/03/21 07:25:18 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	set_player_position(t_game *game, char c, int x, int y)
 {
-	game->player.x = x * BLOCK_SIZE;
-	game->player.y = y * BLOCK_SIZE;
+	game->player.x = x * BLOCK_SIZE + (BLOCK_SIZE / 2);
+	game->player.y = y * BLOCK_SIZE + (BLOCK_SIZE / 2);
 	if (c == 'N')
 		game->player.angle = PI * 1.5;
 	else if (c == 'S')

@@ -28,9 +28,12 @@ static void	init_config(t_config *config)
 
 static bool	valid_color(t_config *config)
 {
-	return (config->floor_color[0] >= 0 && config->floor_color[1] >= 0
-		&& config->floor_color[2] >= 0 && config->ceiling_color[0] >= 0
-		&& config->ceiling_color[1] >= 0 && config->ceiling_color[2] >= 0);
+	return (config->floor_color[0] >= 0 && config->floor_color[0] <= 255
+		&& config->floor_color[1] >= 0 && config->floor_color[1] <= 255
+		&& config->floor_color[2] >= 0 && config->floor_color[2] <= 255
+		&& config->ceiling_color[0] >= 0 && config->ceiling_color[0] <= 255
+		&& config->ceiling_color[1] >= 0 && config->ceiling_color[1] <= 255
+		&& config->ceiling_color[2] >= 0 && config->ceiling_color[2] <= 255);
 }
 
 static void	setup_hooks(t_game *game)

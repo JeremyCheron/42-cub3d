@@ -85,16 +85,16 @@ void	handle_input(mlx_key_data_t keydata, void *param)
 	game = (t_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
-	else if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_UP)
+	else if (keydata.key == MLX_KEY_W)
 		move_forward_backward(game, 1);
-	else if (keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_DOWN)
+	else if (keydata.key == MLX_KEY_S)
 		move_forward_backward(game, -1);
-	else if (keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_LEFT)
+	else if (keydata.key == MLX_KEY_A)
 		move_strafe(game, -1);
-	else if (keydata.key == MLX_KEY_D || keydata.key == MLX_KEY_RIGHT)
+	else if (keydata.key == MLX_KEY_D)
 		move_strafe(game, 1);
-	else if (keydata.key == MLX_KEY_Q)
+	else if (keydata.key == MLX_KEY_Q || keydata.key == MLX_KEY_LEFT)
 		rotate_player(game, -1);
-	else if (keydata.key == MLX_KEY_E)
+	else if (keydata.key == MLX_KEY_E || keydata.key == MLX_KEY_RIGHT)
 		rotate_player(game, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:00:22 by edetoh            #+#    #+#             */
-/*   Updated: 2025/03/21 07:47:04 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/24 12:20:26 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ static void	init_config(t_config *config)
 	config->ceiling_color[2] = -1;
 }
 
+static bool	valid_color(t_config *config)
+{
+	return (config->floor_color[0] >= 0 && config->floor_color[1] >= 0
+		&& config->floor_color[2] >= 0 && config->ceiling_color[0] >= 0
+		&& config->ceiling_color[1] >= 0 && config->ceiling_color[2] >= 0);
+}
+
 static void	setup_hooks(t_game *game)
 {
 	mlx_key_hook(game->mlx, handle_input, game);
@@ -40,7 +47,7 @@ int	main(int argc, char **argv)
 		error_exit(argv[0], "Usage: ./cub3D <map.cub>");
 	init_config(&game.config);
 	read_map(argv[1], &game);
-	if (!validate_map(&game))
+	if (!validate_map(&game) || !valid_color(&game.config))
 	{
 		ft_putendl_fd("Error\nInvalid map", 2);
 		clear_config(&game.config);

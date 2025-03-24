@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:59:20 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 07:58:11 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:28:38 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,27 +75,4 @@ char	**append_line_to_map(char **map, char *line)
 	new_map[i + 1] = NULL;
 	free(map);
 	return (new_map);
-}
-
-int	parse_file(char *filename, t_game *game)
-{
-	int		fd;
-	char	*line;
-	int		y;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	y = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (ft_isdigit(line[0]))
-			process_map_line(game, line, y++);
-		else
-			process_config_line(game, line);
-		free(line);
-	}
-	close(fd);
-	return (0);
 }

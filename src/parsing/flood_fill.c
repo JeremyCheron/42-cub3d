@@ -6,7 +6,7 @@
 /*   By: jcheron <jcheron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 07:59:09 by jcheron           #+#    #+#             */
-/*   Updated: 2025/03/21 10:12:13 by jcheron          ###   ########.fr       */
+/*   Updated: 2025/03/22 08:33:44 by jcheron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	flood_fill(char **map, int x, int y, t_game *game)
 	if (map[y][x] == ' ')
 		return (0);
 	map[y][x] = 'F';
-	printf("x: %d, y: %d --- %c\n", x, y, map[y][x]);
 	if (!flood_fill(map, x + 1, y, game)
 		|| !flood_fill(map, x - 1, y, game)
 		|| !flood_fill(map, x, y + 1, game)
